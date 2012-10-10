@@ -28,6 +28,8 @@ setup(
         "collective.zamqp",
     ],
     extras_require={"test": [
+        "unittest2",
+        "collective.zamqp[test]",
         "plone.app.testing",
     ]},
     entry_points="""
