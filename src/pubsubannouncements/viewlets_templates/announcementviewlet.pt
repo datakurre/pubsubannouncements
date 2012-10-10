@@ -1,0 +1,15 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en" tal:omit-tag="" tal:condition="viewlet/message"
+      i18n:domain="plone">
+<body tal:omit-tag="">
+
+<div style="border: 1px solid black; margin: 1em 0; padding: 1em;">
+<h1>Announcement</h1>
+<p tal:content="viewlet/message">Something important is happening!</p>
+</div>
+
+</body>
+</html>
