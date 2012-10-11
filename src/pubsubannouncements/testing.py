@@ -27,8 +27,10 @@ FUNCTIONAL_TESTING = FunctionalTesting(
     bases=(FIXTURE, ZAMQP_FIXTURE),
     name="Functional")
 
+from plone.app.testing import PLONE_ZSERVER
+
 ACCEPTANCE_TESTING = FunctionalTesting(
-    bases=(PLONE_FIXTURE, z2.ZSERVER_FIXTURE),
+    bases=(PLONE_ZSERVER,),
     name="Acceptance")
 
 
