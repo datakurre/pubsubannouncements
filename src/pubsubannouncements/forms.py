@@ -45,9 +45,6 @@ class AnnouncementForm(form.SchemaForm):
     @button.buttonAndHandler(u"Send")
     def handleSend(self, action):
         data, errors = self.extractData()
-        if errors:
-            self.status = self.formErrorsMessage
-            return
 
         producer = getUtility(IProducer, name="announcements")
         producer.register()

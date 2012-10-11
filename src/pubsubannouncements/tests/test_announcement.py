@@ -29,3 +29,54 @@ class PubSubFunctional(unittest.TestCase):
     def testAnonymousQueueIsDeclared(self):
         runAsyncTest(self._testAnonymousQueueIsDeclared)
 
+    def testViewletIsNotRendered(self):
+        from zope.component import getMultiAdapter
+        from Products.Five.browser import BrowserView
+        from plone.app.layout.viewlets.interfaces import IAboveContent
+
+        context = self.layer["portal"]
+        request = self.layer["request"]
+        view = BrowserView(context, request)
+
+        abovecontent = getMultiAdapter((context, request, view), IAboveContent,
+                                       name="plone.abovecontent")
+        abovecontent.update()
+        self.assertNotIn("Announcement", abovecontent.render())
+
+    def _testViewletIsRendered(self):
+        from zope.component import getMultiAdapter
+        from Products.Five.browser import BrowserView
+        from plone.app.layout.viewlets.interfaces import IAboveContent
+
+        context = self.layer["portal"]
+        request = self.layer["request"]
+
+        view = BrowserView(context, request)
+
+        abovecontent = getMultiAdapter((context, request, view), IAboveContent,
+                                       name="plone.abovecontent")
+        abovecontent.update()
+        self.assertIn("Announcement", abovecontent.render())
+
+    def testViewletIsRendered(self):
+        context = self.layer["portal"]
+        request = self.layer["request"]
+
+        from zope.interface import alsoProvides
+        from z3c.form.interfaces import IFormLayer
+        alsoProvides(request, IFormLayer)
+
+        from pubsubannouncements.forms import AnnouncementForm
+        form = AnnouncementForm(context, request)
+        request.form = {
+            "form.widgets.message": "This is a test announcement!",
+            "form.buttons.send": "Send",
+        }
+        form.update()
+
+        runAsyncTest(self._testAnonymousQueueIsDeclared)
+
+        import transaction
+        transaction.commit()
+
+        runAsyncTest(self._testViewletIsRendered)
