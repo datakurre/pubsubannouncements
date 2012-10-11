@@ -3,13 +3,14 @@
 Library  Selenium2Library  timeout=30  implicit_wait=0.5
 Library  pubsubannouncements.testing.Keywords
 
-Suite Setup  Open browser  ${ZOPE_URL}
+Suite Setup  Open browser  ${ZOPE_URL}  ${BROWSER}  ff_profile_dir=${CURDIR}/profile
 Suite Teardown  Close All Browsers
 
 *** Variables ***
 
-${ZOPE_URL} =  http://localhost:55001
-${Plone_URL} =  ${ZOPE_URL}/plone
+${HTTP_PORT} = 55001
+${ZOPE_URL} =  http://localhost:${HTTP_PORT}
+${PLONE_URL} =  ${ZOPE_URL}/plone
 ${BROWSER} =  firefox
 
 *** Keywords ***
@@ -48,9 +49,6 @@ Log in
 # I've seen simple "Input text" failing randomly on slow CI machines.
 
 *** Test Cases ***
-
-Dummy test
-    Log in admin
 
 Announcement is being delivered
     Log in admin
