@@ -49,6 +49,9 @@ Log in
 
 *** Test Cases ***
 
+Dummy test
+    Log in admin
+
 Announcement is being delivered
     Log in admin
     Go to  ${PLONE_URL}/@@send-announcement
