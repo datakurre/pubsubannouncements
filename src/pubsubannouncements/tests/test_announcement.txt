@@ -1,0 +1,75 @@
+*** Settings ***
+
+Library  Selenium2Library  timeout=30  implicit_wait=0.5
+Library  pubsubannouncements.testing.Keywords
+
+Suite Setup  Open browser  ${ZOPE_URL}  ${BROWSER}  ff_profile_dir=${CURDIR}/profile
+Suite Teardown  Close All Browsers
+
+*** Variables ***
+
+${ZOPE_URL} =  http://localhost:55001
+${Plone_URL} =  ${ZOPE_URL}/plone/
+${BROWSER} =  firefox
+
+*** Keywords ***
+
+Log in admin
+    ${userid} =  Get site owner name
+    ${password} =  Get site owner password
+    Log in  ${userid}  ${password}
+
+Log in user
+    ${userid} =  Get test user name
+    ${password} =  Get test user password
+    Log in  ${userid}  ${password}
+
+Input text and validate once
+    [Arguments]  ${locator}  ${text}
+    Input text  ${locator}  ${text}
+    ${value} =  Get value  ${locator}
+    Should be equal  ${text}  ${value}
+
+Input text and validate
+    [Arguments]  ${locator}  ${text}
+    ${timeout} =  Get selenium timeout
+    Wait until keyword succeeds  ${timeout}  0.5s  Input text and validate once  ${locator}  ${text}
+
+Log in
+    [Arguments]  ${userid}  ${password}
+    Go to  ${PLONE_URL}/login_form
+    Page should contain button  Log in
+    Input text and validate  __ac_name  ${userid}
+    Input text and validate  __ac_password  ${password}
+    Click Button  Log in
+    Page should not contain button  Log in
+
+# XXX: "Input text" part above is more complex than necessary, because
+# I've seen simple "Input text" failing randomly on slow CI machines.
+
+*** Test Cases ***
+
+Announcement is being delivered
+    Log in admin
+    Go to  http://localhost:55001/plone/@@send-announcement
+    Input text and validate  form.widgets.message  This is a test announcement!
+    Click button  Send
+    Go to  http://localhost:55001/plone/
+    Page should contain  This is a test announcement!
+    Capture page screenshot
+
+Announcement is being cleared
+    Log in admin
+    Go to  http://localhost:55001/plone/@@send-announcement
+    Input text and validate  form.widgets.message  This is a test announcement!
+    Click button  Send
+    Go to  http://localhost:55001/plone/
+    Page should contain  Announcement
+    Capture page screenshot
+
+    Go to  http://localhost:55001/plone/@@send-announcement
+    Click button  Send
+    Go to  http://localhost:55001/plone/
+    Capture page screenshot
+
+    Page should not contain  Announcement

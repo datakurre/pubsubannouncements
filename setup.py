@@ -31,6 +31,8 @@ setup(
         "unittest2",
         "collective.zamqp[test]",
         "plone.app.testing",
+        "robotframework-selenium2library",
+        "robotsuite",
     ]},
     entry_points="""
     # -*- Entry points: -*-
