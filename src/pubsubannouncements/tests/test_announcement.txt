@@ -9,7 +9,7 @@ Suite Teardown  Close All Browsers
 *** Variables ***
 
 ${ZOPE_URL} =  http://localhost:55001
-${Plone_URL} =  ${ZOPE_URL}/plone/
+${Plone_URL} =  ${ZOPE_URL}/plone
 ${BROWSER} =  firefox
 
 *** Keywords ***
@@ -51,25 +51,25 @@ Log in
 
 Announcement is being delivered
     Log in admin
-    Go to  http://localhost:55001/plone/@@send-announcement
+    Go to  ${PLONE_URL}/@@send-announcement
     Input text and validate  form.widgets.message  This is a test announcement!
     Click button  Send
-    Go to  http://localhost:55001/plone/
+    Go to  ${PLONE_URL}
     Page should contain  This is a test announcement!
     Capture page screenshot
 
 Announcement is being cleared
     Log in admin
-    Go to  http://localhost:55001/plone/@@send-announcement
+    Go to  ${PLONE_URL}/@@send-announcement
     Input text and validate  form.widgets.message  This is a test announcement!
     Click button  Send
-    Go to  http://localhost:55001/plone/
+    Go to  ${PLONE_URL}
     Page should contain  Announcement
     Capture page screenshot
 
-    Go to  http://localhost:55001/plone/@@send-announcement
+    Go to  ${PLONE_URL}/@@send-announcement
     Click button  Send
-    Go to  http://localhost:55001/plone/
+    Go to  ${PLONE_URL}
+    Page should not contain  Announcement
     Capture page screenshot
 
-    Page should not contain  Announcement
