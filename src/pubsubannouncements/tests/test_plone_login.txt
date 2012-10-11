@@ -3,8 +3,8 @@
 Library  Selenium2Library  timeout=10  implicit_wait=0.5
 Library  robotsuite.tests.test_plone.Keywords
 
-# Suite Setup  Start browser
-# Suite Teardown  Close all browsers
+Suite Setup  Start browser
+Suite Teardown  Close all browsers
 
 
 *** Variables ***
@@ -27,4 +27,6 @@ Log in
 *** Keywords ***
 
 Start browser
-    Open browser  http://localhost:${HTTP_PORT}/plone/
+    Open browser  http://www.google.com/
+
+# http://localhost:${HTTP_PORT}/plone/
