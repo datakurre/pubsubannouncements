@@ -1,4 +1,7 @@
-For Site A::
+Let’s do a simple publish-subscribe -scenario.
+
+Let there be Plone Site A with some custom HTML form for sending announcement
+messages::
 
     python bootstrap
     bin/buildout
@@ -8,7 +11,8 @@ For Site A::
 
     bin/instance fg
 
-For Site B, C, etc..::
+And let there be other Plone sites, like B and C, to immediately act upon those
+messages. For example, by making them visible for the current users::
 
     python bootstrap
     bin/buildout instance:http-address=8081
