@@ -3,7 +3,7 @@
 Library  Selenium2Library  timeout=30  implicit_wait=0.5
 Library  pubsubannouncements.testing.Keywords
 
-Suite Setup  Open browser  ${ZOPE_URL}  ${BROWSER}  ff_profile_dir=${CURDIR}/profile
+Suite Setup  Open browser  ${ZOPE_URL}
 Suite Teardown  Close All Browsers
 
 *** Variables ***
