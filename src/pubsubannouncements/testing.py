@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 """ Testing layers and keywords """
 
-from plone.app.testing import PloneSandboxLayer
-from plone.app.testing import PLONE_FIXTURE
-from plone.app.testing import FunctionalTesting
+from plone.app.testing import (
+    PloneSandboxLayer,
+    PLONE_FIXTURE,
+    PLONE_ZSERVER,
+    FunctionalTesting
+)
 
 from collective.zamqp.testing import (
     ZAMQP_FIXTURE,
@@ -26,8 +29,6 @@ FIXTURE = Layer()
 FUNCTIONAL_TESTING = FunctionalTesting(
     bases=(FIXTURE, ZAMQP_FIXTURE),
     name="Functional")
-
-from plone.app.testing import PLONE_ZSERVER
 
 ACCEPTANCE_TESTING = FunctionalTesting(
     bases=(PLONE_ZSERVER,),
