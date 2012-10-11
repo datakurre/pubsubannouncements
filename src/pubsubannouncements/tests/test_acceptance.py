@@ -15,5 +15,7 @@ def test_suite():
     suite.addTests([
         layered(robotsuite.RobotTestSuite("test_plone_login.txt"),
                 layer=ACCEPTANCE_TESTING),
+        # layered(robotsuite.RobotTestSuite("test_announcement.txt"),
+        #         layer=ACCEPTANCE_TESTING),
     ])
     return suite

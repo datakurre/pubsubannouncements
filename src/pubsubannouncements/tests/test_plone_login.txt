@@ -6,11 +6,6 @@ Library  robotsuite.tests.test_plone.Keywords
 Suite Setup  Start browser
 Suite Teardown  Close all browsers
 
-
-*** Variables ***
-
-${HTTP_PORT} =  55001
-
 *** Test Cases ***
 
 Log in
@@ -27,4 +22,4 @@ Log in
 *** Keywords ***
 
 Start browser
-    Open browser  http://localhost:55001/plone/
+    Open browser  http://www.google.com/

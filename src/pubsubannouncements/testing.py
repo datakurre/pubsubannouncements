@@ -4,7 +4,6 @@
 from plone.app.testing import (
     PloneSandboxLayer,
     PLONE_FIXTURE,
-    PLONE_ZSERVER,
     FunctionalTesting
 )
 
@@ -31,7 +30,7 @@ FUNCTIONAL_TESTING = FunctionalTesting(
     name="Functional")
 
 ACCEPTANCE_TESTING = FunctionalTesting(
-    bases=(PLONE_ZSERVER,),
+    bases=(FIXTURE, ZAMQP_ZSERVER_FIXTURE, z2.ZSERVER_FIXTURE),
     name="Acceptance")
 
 
