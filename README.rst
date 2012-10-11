@@ -25,3 +25,6 @@ All sites will show the announcement (for the next requests).
 Open the announcement from again and, this time, send an empty announcement.
 
 All sites will hide the announcement (for the next requests).
+
+.. image:: https://secure.travis-ci.org/datakurre/pubsubannouncements.png
+     :target: http://travis-ci.org/datakurre/pubsubannouncements
