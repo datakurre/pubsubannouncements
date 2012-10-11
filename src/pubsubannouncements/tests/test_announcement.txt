@@ -56,7 +56,6 @@ Announcement is being delivered
     Click button  Send
     Go to  ${PLONE_URL}
     Page should contain  This is a test announcement!
-    Capture page screenshot
 
 Announcement is being cleared
     Log in admin
@@ -65,11 +64,8 @@ Announcement is being cleared
     Click button  Send
     Go to  ${PLONE_URL}
     Page should contain  Announcement
-    Capture page screenshot
 
     Go to  ${PLONE_URL}/@@send-announcement
     Click button  Send
     Go to  ${PLONE_URL}
     Page should not contain  Announcement
-    Capture page screenshot
-
