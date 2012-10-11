@@ -27,6 +27,4 @@ Log in
 *** Keywords ***
 
 Start browser
-    Open browser  http://www.google.com/
-
-# http://localhost:${HTTP_PORT}/plone/
+    Open browser  http://localhost:55001/plone/
