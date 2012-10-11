@@ -28,7 +28,7 @@ FUNCTIONAL_TESTING = FunctionalTesting(
     name="Functional")
 
 ACCEPTANCE_TESTING = FunctionalTesting(
-    bases=(FIXTURE, z2.ZSERVER_FIXTURE),
+    bases=(PLONE_FIXTURE, z2.ZSERVER_FIXTURE),
     name="Acceptance")
 
 
