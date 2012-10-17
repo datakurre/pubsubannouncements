@@ -3,6 +3,8 @@ syntax: glob
 bin
 parts
 develop-eggs
+coverage
+html
 var
 
 dist
