@@ -33,6 +33,9 @@ setup(
         "plone.app.testing",
         "robotframework-selenium2library",
         "robotsuite",
+    ], "docs": [
+        "sphinxcontrib-robotdoc",
+        "sphinx",
     ]},
     entry_points="""
     # -*- Entry points: -*-

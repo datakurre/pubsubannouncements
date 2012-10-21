@@ -1,0 +1,61 @@
+*** Settings ***
+
+Library  Selenium2Library  timeout=30  implicit_wait=0.5
+
+Variables  plone/app/testing/interfaces.py
+
+*** Variables ***
+
+${ZOPE_HOST} =  localhost
+${HTTP_PORT} =  55001
+${ZOPE_URL} =  http://${ZOPE_HOST}:${HTTP_PORT}
+${PLONE_URL} =  ${ZOPE_URL}/plone
+
+${BROWSER} =  firefox
+
+*** Keywords ***
+
+Log in admin
+    [Documentation]  Logs the user into Plone with site owner name and
+    ...              password. The logged-in user will have *Manager*-role
+    ...              and all permissions.
+    Log in  ${SITE_OWNER_NAME}  ${SITE_OWNER_PASSWORD}
+
+Input text and validate once
+    [Documentation]  A helper keyword for setting text value of the located
+    ...              input field and checking that the value has been set.
+    ...
+    ...              This keyword should not be used directly, but only called
+    ...              the keyword `Input text and validate`_.
+    [Arguments]  ${locator}  ${text}
+    Input text  ${locator}  ${text}
+    ${value} =  Get value  ${locator}
+    Should be equal  ${text}  ${value}
+
+Input text and validate
+    [Documentation]  A helper keyword accepting **${locator}** and **${text}**
+    ...              and setting text value of the located input field and
+    ...              checking that the value has been set.
+    ...
+    ...              Actually, this should not be needed. This was added
+    ...              when CI tests were failing randomly, because of not all
+    ...              login form fields were always filled (probably due to a
+    ...              slow CI server). The need for this might indicate an
+    ...              issue in Selenium2Library_.
+    ...
+    ...              .. _Selenium2Library: https://github.com/rtomac/robotframework-selenium2library
+    [Arguments]  ${locator}  ${text}
+    ${timeout} =  Get selenium timeout
+    Wait until keyword succeeds  ${timeout}  0.5s  Input text and validate once  ${locator}  ${text}
+
+Log in
+    [Documentation]  Goes to the Plone login form and Logs in the user with
+    ...              the given **${userid}** and **${password}**. The logged-in
+    ...              user will be left on the welcome page after the login.
+    [Arguments]  ${userid}  ${password}
+    Go to  ${PLONE_URL}/login_form
+    Page should contain button  Log in
+    Input text and validate  __ac_name  ${userid}
+    Input text and validate  __ac_password  ${password}
+    Click Button  Log in
+    Page should not contain button  Log in

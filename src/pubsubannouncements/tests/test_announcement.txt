@@ -1,72 +1,52 @@
 *** Settings ***
 
-Library  Selenium2Library  timeout=30  implicit_wait=0.5
-Library  pubsubannouncements.testing.Keywords
+Resource  common.txt
 
 Suite Setup  Open browser  ${ZOPE_URL}  ${BROWSER}  ff_profile_dir=${CURDIR}/profile
 Suite Teardown  Close All Browsers
 
-*** Variables ***
-
-${HTTP_PORT} =  55001
-${ZOPE_URL} =  http://localhost:${HTTP_PORT}
-${PLONE_URL} =  ${ZOPE_URL}/plone
-${BROWSER} =  firefox
-
 *** Keywords ***
 
-Log in admin
-    ${userid} =  Get site owner name
-    ${password} =  Get site owner password
-    Log in  ${userid}  ${password}
+I'm logged in as an admin
+    Log in admin
 
-Log in user
-    ${userid} =  Get test user name
-    ${password} =  Get test user password
-    Log in  ${userid}  ${password}
+I open the announcement form
+    Go to  ${PLONE_URL}/@@send-announcement
 
-Input text and validate once
-    [Arguments]  ${locator}  ${text}
-    Input text  ${locator}  ${text}
-    ${value} =  Get value  ${locator}
-    Should be equal  ${text}  ${value}
+I submit a test announcement
+    Input text and validate  form.widgets.message  This is a test announcement!
+    Click button  Send
 
-Input text and validate
-    [Arguments]  ${locator}  ${text}
-    ${timeout} =  Get selenium timeout
-    Wait until keyword succeeds  ${timeout}  0.5s  Input text and validate once  ${locator}  ${text}
+I return to the front page
+    Go to  ${PLONE_URL}
 
-Log in
-    [Arguments]  ${userid}  ${password}
-    Go to  ${PLONE_URL}/login_form
-    Page should contain button  Log in
-    Input text and validate  __ac_name  ${userid}
-    Input text and validate  __ac_password  ${password}
-    Click Button  Log in
-    Page should not contain button  Log in
+The page displays my test announcement.
+    Page should contain  This is a test announcement!
 
-# XXX: "Input text" part above is more complex than necessary, because
-# I've seen simple "Input text" failing randomly on slow CI machines.
+I've sent a test announcement
+    Go to  ${PLONE_URL}/@@send-announcement
+    Input text and validate  form.widgets.message  This is a test announcement!
+    Click button  Send
+
+I submit an empty announcement
+    Click button  Send
+
+The page no longer displays my test announcement.
+    Page should not contain  This is a test announcement!
 
 *** Test Cases ***
 
 Announcement is being delivered
-    Log in admin
-    Go to  ${PLONE_URL}/@@send-announcement
-    Input text and validate  form.widgets.message  This is a test announcement!
-    Click button  Send
-    Go to  ${PLONE_URL}
-    Page should contain  This is a test announcement!
+    Given I'm logged in as an admin
+    When I open the announcement form
+      And I submit a test announcement
+      And I return to the front page
+    Then the page displays my test announcement.
 
 Announcement is being cleared
-    Log in admin
-    Go to  ${PLONE_URL}/@@send-announcement
-    Input text and validate  form.widgets.message  This is a test announcement!
-    Click button  Send
-    Go to  ${PLONE_URL}
-    Page should contain  Announcement
-
-    Go to  ${PLONE_URL}/@@send-announcement
-    Click button  Send
-    Go to  ${PLONE_URL}
-    Page should not contain  Announcement
+    Given I'm logged in as an admin
+      And I've sent a test announcement
+    When I open the announcement form
+      And I submit an empty announcement
+      And I return to the front page
+    Then the page no longer displays my test announcement.

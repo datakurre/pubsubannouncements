@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+"""Functional testing using plone.app.testing"""
+
 import unittest2 as unittest
 
 import re

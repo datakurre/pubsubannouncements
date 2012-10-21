@@ -32,15 +32,3 @@ FUNCTIONAL_TESTING = FunctionalTesting(
 ACCEPTANCE_TESTING = FunctionalTesting(
     bases=(FIXTURE, ZAMQP_ZSERVER_FIXTURE, z2.ZSERVER_FIXTURE),
     name="Acceptance")
-
-
-class Keywords(object):
-    """ Robot Framework keyword library """
-
-    def get_site_owner_name(self):
-        import plone.app.testing
-        return plone.app.testing.interfaces.SITE_OWNER_NAME
-
-    def get_site_owner_password(self):
-        import plone.app.testing
-        return plone.app.testing.interfaces.SITE_OWNER_PASSWORD
