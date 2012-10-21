@@ -54,14 +54,14 @@ Finally, we should be able to try this out.
 .. robot_tests::
    :source: ../src/pubsubannouncements/tests/test_announcement.txt
 
-Steps Explained
----------------
+Scenario Steps Explained
+========================
 
 .. robot_keywords::
    :source: ../src/pubsubannouncements/tests/test_announcement.txt
 
 Common Steps Explained
-----------------------
+======================
 
 .. robot_keywords::
    :source: ../src/pubsubannouncements/tests/common.txt
