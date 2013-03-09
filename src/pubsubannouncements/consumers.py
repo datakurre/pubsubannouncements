@@ -21,6 +21,7 @@ class Announcements(Consumer):
 
     exchange = "announcements"
     exchange_type = "fanout"
+    routing_key = "*"
     queue = ""  # anonymous queue
     durable = False
 
