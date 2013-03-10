@@ -54,6 +54,12 @@ Finally, we should be able to try this out.
 .. robot_tests::
    :source: ../src/pubsubannouncements/tests/test_announcement.txt
 
+:doc:`robot`
+
+.. toctree::
+   :hidden:
+   robot
+
 Scenario Steps Explained
 ========================
 
