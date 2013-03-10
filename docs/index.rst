@@ -56,10 +56,6 @@ Finally, we should be able to try this out.
 
 :doc:`robot`
 
-.. toctree::
-   :hidden:
-   robot
-
 Scenario Steps Explained
 ========================
 
